@@ -1,20 +1,16 @@
 package com.ontraport.multidimensional;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
-import java.util.TreeMap;
 import java.util.TreeSet;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class Main {
 	public static void main(String[] args){
 		Container input = new Container("one", new Container("two", 3).add("four", 5, 6, 7)); 
 		input.add("eight", new Container("nine", new Container("ten", 11)));
-		printContainer(input, "");
+		printContainer(input);
 		
 		//Q1
 		HashMap<String, Integer> map = toArray(input);
@@ -22,7 +18,7 @@ public class Main {
 		
 		//Q2
 		Container container = toContainer(map);
-		printContainer(container, "");
+		printContainer(container);
 		
 	}
 	
@@ -108,6 +104,10 @@ public class Main {
 			}
 		}
 		System.out.println("\n}");
+	}
+	
+	public static void printContainer(Container container){
+		printContainer(container, "");
 	}
 	
 	public static void printContainer(Container container, String tabs){
