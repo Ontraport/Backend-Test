@@ -14,7 +14,7 @@ E.G.
     {
         'two': 3,
         'four': [ 5,6,7]
-    }
+    },
     'eight':
     {
         'nine':
@@ -30,7 +30,7 @@ turns into:
 ```
 {
     'one/two':3,
-    'one/four/0':5
+    'one/four/0':5,
     'one/four/1':6,
     'one/four/2':7,
     'eight/nine/ten':11
