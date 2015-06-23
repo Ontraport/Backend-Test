@@ -33,7 +33,6 @@ function multiDimToSingleDim ($multiArray, $path = "") {
 
 // takes an array
 // outputs an array that has a multiple dimension
-// assumption: this algorithm assumes that order matters and sub-arrays are grouped together
 function singleDimToMultiDim ($singleArray) {
     if (count($singleArray) == 0) {
         // array is empty
