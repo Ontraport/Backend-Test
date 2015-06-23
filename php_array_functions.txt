@@ -1,0 +1,73 @@
+// Interview code challenge done by Eric Gentry on June 23, 2015
+
+// takes an array
+// outputs an array that has a single dimension
+function multiDimToSingleDim ($multiArray, $path = "") {
+    if (count($multiArray) == 0) {
+        // array is empty
+        return array();
+    }
+    
+    $singleDimOutput = array();
+    
+    foreach( $multiArray as $key => $val ) {
+        // prepare the separator
+        $separator = "/";
+        if ($path == "") {
+            // this means we are at the top, don't add a pre-pending slash!!!
+            $separator = "";
+        }
+        
+        if( is_array( $val ) ) {
+            // get all sub-array items and push them onto the single dimensional array
+            $singleDimOutput = array_merge($singleDimOutput, multiDimToSingleDim($val, $path . $separator . $key));
+        } else {
+            // add this item to the array
+            $singleDimOutput[$path . $separator . $key] = $val;
+        }
+    }
+    
+    // return the current single dimension array
+    return $singleDimOutput;
+}
+
+// takes an array
+// outputs an array that has a multiple dimension
+function singleDimToMultiDim ($singleArray) {
+    if (count($singleArray) == 0) {
+        // array is empty
+        return array();
+    }
+    
+    $multiDimOutput = array();
+    
+    $currentKey = "";
+    $subArray = array();
+    
+    foreach( $singleArray as $key => $val ) {
+        // get the parts of the path
+        $pathArray = explode('/', $key);
+        
+        // push the node down and rename it
+        $newNode = array();
+        while (count($pathArray) > 0) {
+            if (count($newNode) == 0) {
+                // make the new node from the last part of the key
+                $newNode[array_pop($pathArray)] = $val;
+                continue;
+            }
+            
+            // add it as a sub-node
+            $newNode[array_pop($pathArray)] = $newNode;
+            
+            // remove the node that was copied inside the current node
+            array_shift($newNode);
+        }
+        
+        // add this node to the main output
+        $multiDimOutput = array_merge_recursive($multiDimOutput, $newNode);
+    }
+    
+    // return the current multi dimension array
+    return $multiDimOutput;
+}
