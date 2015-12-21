@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
 
 def convert_to_associative(multidim, associative, _path=None):
@@ -34,6 +35,7 @@ def convert_to_associative(multidim, associative, _path=None):
 def revert_from_associative(associative):
     """
     :param associative: an one dimensional associate array (Python dict) representing a multi-dimensional container.
+    :return: a multi-dimensional container.
 
      #Doctest
      >>> associative = {'one/two': 3, 'one/four/0': 5, 'one/four/1': 6, 'one/four/2': 7, 'eight/nine/ten': 11}
