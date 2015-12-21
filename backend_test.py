@@ -31,35 +31,60 @@ def convert_to_associative(multidim, associative, _path=None):
         associative[_path] = multidim
 
 
-def revert_from_associative(associative, multidim):
+def revert_from_associative(associative):
     """
     :param associative: an one dimensional associate array (Python dict) representing a multi-dimensional container.
-    :param multidim: a python dict to be populated by this function.
 
      #Doctest
      >>> associative = {'one/two': 3, 'one/four/0': 5, 'one/four/1': 6, 'one/four/2': 7, 'eight/nine/ten': 11}
-     >>> container = dict()
-     >>> revert_from_associative(associative, container)
+     >>> print(revert_from_associative(associative).__eq__({'one': {'two': 3, 'four': [5, 6, 7]}, 'eight':\
+      {'nine': {'ten': 11}}}))
+     True
     """
-    def populate_tree(container, path):
-        if '/' not in path[0]:
-            return path[1]
 
-        next_slash = path.index('/')
-        currentKey = path[:next_slash]
+    def populate_tree(item, container=None):
+        try:
+            next_slash = item[0].index('/')
+            current_key = item[0][:next_slash]
+            item[0] = item[0][next_slash + 1:]
 
-        if currentKey.isdecimal():
-            if isinstance(container, list):
-                container.insert(int(currentKey), populate_tree(path[next_slash+1:]))
+            if not (current_key).isnumeric():
+                if container is None:
+                    container = {}
+
+                if current_key not in container:
+                    container[current_key] = populate_tree(item, None)
+                else:
+                    populate_tree(item, container[current_key])
             else:
-                return [].insert(int(currentKey), populate_tree(path[next_slash+1:]))
+                if container is None:
+                    container = []
 
-    for path in associative.items():
-        populate_tree(multidim, path)
+                if len(container) < int(current_key) + 1:
+                    container.append(populate_tree(item, None))
+                else:
+                    populate_tree(item, container[int(current_key)])
+        except ValueError:
+            if not item[0].isnumeric():
+                if container is None:
+                    container = {}
+                container[item[0]] = item[1]
+            else:
+                if container is None:
+                    container = []
+                container.append(item[1])
 
+        return container
 
-    pass
+    from operator import itemgetter
 
+    items_tuple = sorted(associative.items(), key=itemgetter(0))
+    multidim = populate_tree(list(items_tuple[0]))
+
+    for item in items_tuple[1:]:
+        populate_tree(list(item), multidim)
+
+    return multidim
 
 if __name__ != "__main__":
     import doctest
