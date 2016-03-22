@@ -64,37 +64,33 @@ function printIt($comment, $variable)
 /////////////////////////////////////
 // Main routine.  Tests the functions above.
 
-try {
-    // Prep the input
-    $multi = json_decode(
-        '{
-            "one":
+// Prep the input
+$multi = json_decode(
+    '{
+        "one":
+        {
+            "two": 3,
+            "four": [ 5,6,7]
+        },
+        "eight":
+        {
+            "nine":
             {
-                "two": 3,
-                "four": [ 5,6,7]
-            },
-            "eight":
-            {
-                "nine":
-                {
-                    "ten":11
-                }
+                "ten":11
             }
-        }',
-        true
-    );
-    printIt('starting from:', $multi);
+        }
+    }',
+    true
+);
+printIt('starting from:', $multi);
 
-    // Test manyToOne()
-    $single = manyToOne($multi);
-    printIt('flattened to:', $single);
+// Test manyToOne()
+$single = manyToOne($multi);
+printIt('flattened to:', $single);
 
-    // Test oneToMany()
-    $many = oneToMany($single);
-    printIt('expanded to:', $many);
-} catch (Exception $e) {
-    echo('Caught exception: '.$e->getMessage()."\n");
-    exit(1);
-}
+// Test oneToMany()
+$many = oneToMany($single);
+printIt('expanded to:', $many);
+
 echo("Done\n");
 exit(0);
