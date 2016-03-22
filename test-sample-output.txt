@@ -1,0 +1,44 @@
+starting from:
+{
+    "one": {
+        "two": 3,
+        "four": [
+            5,
+            6,
+            7
+        ]
+    },
+    "eight": {
+        "nine": {
+            "ten": 11
+        }
+    }
+}
+
+flattened to:
+{
+    "one/two": 3,
+    "one/four/0": 5,
+    "one/four/1": 6,
+    "one/four/2": 7,
+    "eight/nine/ten": 11
+}
+
+expanded to:
+{
+    "one": {
+        "two": 3,
+        "four": [
+            5,
+            6,
+            7
+        ]
+    },
+    "eight": {
+        "nine": {
+            "ten": 11
+        }
+    }
+}
+
+Done
