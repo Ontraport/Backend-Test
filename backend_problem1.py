@@ -7,25 +7,19 @@ def _multiToOne(container, key_str, output):
 	for key, val in container.iteritems():
 		current_key = key_str + key + "/"
 
-		if (isinstance(val, list)):
-			# print "list key:{} val:{}".format(current_key, val)
+		if isinstance(val, list):
 			index = 0
+
 			for elem in val:
 				list_key = "{}{}".format(current_key,index)
 				output[list_key] = elem
 				index = index + 1
-		elif (isinstance(val, dict)):
+		elif isinstance(val, dict):
 			_multiToOne(val, current_key, output)
-			# print "dict key:{} val:{}".format(current_key, val)
 		else:
 			current_key = key_str + key
-			# print "else {}:{}".format(current_key, val)
 			output[current_key] = val
 
-
-		
-		# print "key {}".format(key)
-		# print "val {}".format(val)
 
 def multiToOne(container):
 	output = {}
@@ -33,11 +27,15 @@ def multiToOne(container):
 	return output
 
 
+'''
+Test input given from problem description
+'''
+
 test_input = {
     'one':
     {
         'two': 3,
-        'four': [ 5,6,7]
+        'four': [5,6,7]
     },
     'eight':
     {
@@ -48,8 +46,6 @@ test_input = {
     }
 }
 
-# container = {'one': {'two': 3, 'four': [ 5,6,7]}, 'eight': {'nine': {'ten': 11}}}
-	
-print multiToOne(test_input)
+print multiToOne(error_input)
 
 
