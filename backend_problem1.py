@@ -9,7 +9,6 @@ def _multiToOne(container, key_str, output):
 
 		if isinstance(val, list):
 			index = 0
-
 			for elem in val:
 				list_key = "{}{}".format(current_key,index)
 				output[list_key] = elem
@@ -46,6 +45,6 @@ test_input = {
     }
 }
 
-print multiToOne(error_input)
+print multiToOne(test_input)
 
 
