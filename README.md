@@ -1,14 +1,12 @@
-# ONTRAPORT Backend Skills Test
+my solution to Ontraport's backend skills test. two implementations: one in javascript, and one in ruby
 
-Hi, Thanks for checking us out
+# Original Question
 
-If you're interested in applying for the **Backend Engineer** team a great first step is to complete a brief test to allow us to assess your skills. You will find our Backend Engineer test below. Any language is fine, please note there are **two** questions:
+>1) Write a function that accepts a multi-dimensional container of any size and converts it into a one dimensional associative array whose keys are strings representing their value's path in the original container.
 
-1) Write a function that accepts a multi-dimensional container of any size and converts it into a one dimensional associative array whose keys are strings representing their value's path in the original container.
+>E.G.
 
-E.G.
-
-```
+>```
 {
     'one':
     {
@@ -25,9 +23,9 @@ E.G.
 }
 ```
 
-turns into:
+>turns into:
 
-```
+>```
 {
     'one/two':3,
     'one/four/0':5,
@@ -37,10 +35,4 @@ turns into:
 }
 ```
 
-2) Now write a separate function to do the reverse.
-
-We want you to fork and then create a pull-reqest against this repository and we'll review it.
-
-Thanks and good luck!
-
-Ontraport Careers Team
+>2) Now write a separate function to do the reverse.
