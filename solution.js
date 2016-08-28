@@ -1,7 +1,9 @@
 #!/usr/bin/env node
 "use strict";
 
-// Note: This is ES6. In ES5, iterating over keys in an object requires taking more safeguards. I used this method because it extracts the indices of an array as if they were properties on a POJO, which is super convenient!
+// Note: This is ES6. In ES5, iterating over keys in an object requires taking
+// more safeguards. I used this method because it extracts the indices of an
+// array as if they were properties on a POJO, which is super convenient!
 function flatten( container ) {
   var output = {};
   var flat;

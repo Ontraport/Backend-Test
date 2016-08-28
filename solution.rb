@@ -24,7 +24,8 @@ def deflatten( container )
     keys = key.split("/")
     ref = output
     keys.each_with_index do |subkey, index|
-      # apologies for the regex. again: assumption here is that an int path always refers to an array index
+      # apologies for the regex. again: assumption here is that
+      # an int path always refers to an array index
       if index < keys.length - 1
         if !!(keys[index+1] =~ /^[0-9]*$/) && !ref[subkey]
           ref[subkey] = []
