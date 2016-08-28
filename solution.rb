@@ -35,7 +35,7 @@ def deflatten( container )
         ref = ref[subkey]
       else
         if ref.class == Array
-          ref.push( val )
+          ref[subkey.to_i] = val
         else
           ref[subkey] = val
         end
