@@ -2,7 +2,17 @@
 container = {    'one':
     {
         'two': 3,
-        'four': [ 5,6,7]
+        'four': [ 12,
+        			{'thirteen':
+        				{
+        					'fourteen': 15
+        				}
+        			},
+        			{'nineteen':
+        				{
+        					'twenty': 21
+        				}
+        		}]
     },
     'eight':
     {
@@ -14,11 +24,13 @@ container = {    'one':
 }
 
 def flatten(container):
+
+	if type(container) is not dict:
+		return None
 	
 	flat = {}
 
 	for key in container:
-		
 		#get value type
 		valueType = type(container[key])
 		
@@ -30,7 +42,10 @@ def flatten(container):
 		elif valueType is list:
 			for index, value in enumerate(container[key]):
 				#append index to key
-				flat[key + '/' + str(index)] = value
+				if(type(value) is str or type(value) is int):
+					flat[key + '/' + str(index)] = value
+				else:
+					flat[key + '/' + str(index)] = flatten(value)
 		elif valueType is str or int:
 			flat[key] = container[key]
 
@@ -38,6 +53,10 @@ def flatten(container):
 
 def deflatten(flatContainer):
 
+
+	if type(flatContainer) is not dict:
+		return None
+		
 	container = {}
 
 	for key in flatContainer:
@@ -69,6 +88,9 @@ def deflatten(flatContainer):
 							valList.append(0)
 
 						#update list entry
+						if type(container[parentKey][key][gkey]) is dict:
+							container[parentKey][key][gkey] = deflatten(container[parentKey][key][gkey])
+
 						valList[int(gkey)] = container[parentKey][key][gkey]
 
 						#update list to container
@@ -85,6 +107,8 @@ def deflatten(flatContainer):
 							valList.append(0)
 					
 					#update list entry
+					if type(children[key][gkey]) is dict:
+							children[key][gkey]= deflatten(children[key][gkey])
 					valList[int(gkey)] = children[key][gkey]
 						
 				else:
