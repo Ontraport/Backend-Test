@@ -37,14 +37,6 @@ def flatten(container):
 
 	return flat
 
-def mergeList(list1, list2):
-	for index, value in enumerate(list2):
-		if value is not 0:
-			list1[index] = list2[index]
-
-	return list1
-
-
 def deflatten(flatContainer):
 
 	container = {}
