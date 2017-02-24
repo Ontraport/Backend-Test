@@ -44,12 +44,11 @@ def deflatten(flatContainer):
 		if "/" in key:
 			parentKey, childKey = key.split("/", 1)
 
+			#recursively deflatten the child
 			child = {}
 			child[childKey] = flatContainer[key]
-
 			children = deflatten(child)
 
-			#recursively deflatten the child
 			if parentKey not in container:
 				container[parentKey] = {}
 
