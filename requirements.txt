@@ -1,0 +1,4 @@
+docopt
+pytest
+pytest-cov
+mypy
