@@ -1,6 +1,9 @@
 <?php
 namespace BackendTest;
 
+/**
+ * A base recursive iterator class for BackendTest
+ */
 class BackendTestRecursiveKeysIterator extends \RecursiveIteratorIterator
 {
     public function __construct(array $arg_multi_dimensional_array)

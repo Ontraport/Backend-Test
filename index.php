@@ -25,3 +25,7 @@ $associative_array = $objArrayManuplator->doConvertToAssociativeArray(
 );
 
 $revered_array = $objArrayManuplator->doReverseToOriginalArray($associative_array);
+
+print "<pre>" . print_r($associative_array,1) . "</pre>";
+print PHP_EOL;
+print "<pre>" . print_r($revered_array,1) . "</pre>";
