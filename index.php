@@ -2,7 +2,7 @@
 
 use BackendTest\ArrayManipulator as ArrayManipulator;
 
-include_once "ArrayManuplator.php";
+include_once "ArrayManipulator.php";
 
 $multi_dimensional_array = array(
     'one' => array(
