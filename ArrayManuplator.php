@@ -100,7 +100,6 @@ class ArrayManipulator
 
           $_return = $value;
 
-
           unset($_return);
       }
 
