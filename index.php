@@ -18,13 +18,13 @@ $multi_dimensional_array = array(
     )
 );
 
-$objArrayManuplator = new ArrayManipulator();
+$objArrayManipulator = new ArrayManipulator();
 
-$associative_array = $objArrayManuplator->doConvertToAssociativeArray(
+$associative_array = $objArrayManipulator->doConvertToAssociativeArray(
   $multi_dimensional_array
 );
 
-$revered_array = $objArrayManuplator->doReverseToOriginalArray($associative_array);
+$revered_array = $objArrayManipulator->doReverseToOriginalArray($associative_array);
 
 print "<pre>" . print_r($associative_array,1) . "</pre>";
 print PHP_EOL;
