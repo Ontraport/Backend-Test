@@ -44,3 +44,12 @@ We want you to fork and then create a pull-reqest against this repository and we
 Thanks and good luck!
 
 Ontraport Careers Team
+
+# How to use:
+This is a command line tool.
+
+```
+php convert.php <command> <path/to/file.json> <separator(optional)>
+```
+where command is one from 'one' or 'multi';
+
