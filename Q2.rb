@@ -1,74 +1,32 @@
-def decomp_helper(partMap)
-	temp = partMap.keys[0].split("/", 2)[0]
-	tempMap = Hash.new
+def decomp_alt(partMap)
 	finalMap = Hash.new
-	temparray = [];
 	partMap.each do |key, value|
+		parent, child = key.split("/", 2)
+		isArray = Integer(child) rescue false
 
-		toks = key.split("/", 2)
-
-		if toks[0] == temp
-
-			isArray = Integer(toks[1]) rescue false
-
-			if toks[1].instance_of?(NilClass)
-				finalMap.store(toks[0], value)
-			elsif isArray
-				temparray << value
-				puts temparray
-			else
-				tempMap.store(toks[1], value)
-			end
-
-		else 
-
-			if not temparray.empty?
-				finalMap.store(temp, temparray)
-				temparray.clear
-			elsif not tempMap.empty?
-				finalValue = decomp_helper(tempMap)
-				finalMap.store(temp, finalValue)
-				tempMap.clear
-			end
-			
-			temp = toks[0]
-			redo
+		if child.instance_of?(NilClass)
+			finalMap[parent] = value
+		elsif isArray && finalMap.key?(parent)
+			finalMap[parent] << value
+		elsif finalMap.key?(parent)
+			finalMap[parent][child] = value
+		elsif isArray
+			finalMap[parent] = [value]
+		else
+			finalMap[parent] = { child => value }
 		end
 	end
 
-
-	if not temparray.empty?
-			finalMap.store(temp, temparray)
-			temparray = Array.new
-	elsif not tempMap.empty?
-		finalValue = decomp_helper(tempMap)
-		finalMap.store(temp, finalValue)
+	finalMap.each do |key, value|
+		if value.instance_of?(Hash)
+			finalMap[key] = decomp_alt(value)
+		end
 	end
-
 	return finalMap
 end
 
-
-
 def decomp_single(oneD)
-	manyD = Hash.new
-	temp = oneD.keys[0].split("/", 2)[0]
-	tempMap = Hash.new
-	oneD.each do |key, value|
-		toks = key.split("/", 2)
-		if toks[0] == temp
-			tempMap.store(toks[1], value)
-		else 
-			finalValue = decomp_helper(tempMap)
-			manyD.store(temp, finalValue)
-			temp = toks[0]
-			tempMap = Hash.new
-			redo
-		end
-	end
-	finalValue = decomp_helper(tempMap)
-	manyD.store(temp, finalValue)
-	puts manyD
+	puts decomp_alt(oneD)
 end
 
 example = {
