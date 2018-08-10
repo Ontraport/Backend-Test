@@ -1,4 +1,4 @@
-def decomp_alt(partMap)
+def decompiler_helper(partMap)
 	finalMap = Hash.new
 	partMap.each do |key, value|
 		parent, child = key.split("/", 2)
@@ -19,14 +19,14 @@ def decomp_alt(partMap)
 
 	finalMap.each do |key, value|
 		if value.instance_of?(Hash)
-			finalMap[key] = decomp_alt(value)
+			finalMap[key] = decompile_helper(value)
 		end
 	end
 	return finalMap
 end
 
-def decomp_single(oneD)
-	puts decomp_alt(oneD)
+def decompile_single(oneDArray)
+	puts decompile_helper(oneDArray)
 end
 
 example = {
@@ -38,4 +38,4 @@ example = {
     }
 
 
-decomp_single(example)
+decompile_single(example)
