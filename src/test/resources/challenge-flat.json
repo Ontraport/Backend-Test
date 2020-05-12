@@ -1,0 +1,42 @@
+{
+    "0":"fluffy",
+
+    "1/flags/0":false,
+    "1/flags/1":true,
+    "1/flags/2":true,
+    "1/flags/3":false,
+    "1/flags/4":"undefined",
+
+    "1/oranges/0":"navel",
+    "1/oranges/1":"valencia",
+    "1/oranges/2":"mandarin",
+
+    "1/pi":3.14159265,
+
+    "1/answers/0":true,
+    "1/answers/1":false,
+    "1/answers/2":false,
+    "1/answers/3":"c",
+    "1/answers/4":"b",
+    "1/answers/5":1971,
+    "1/answers/6":null,
+    "1/answers/7":"d",
+
+    "1/tricky/0":"my hero",
+    "1/tricky/red":"roses",
+    "1/tricky/blue":"violets",
+
+    "2":42,
+    "3":null,
+    "4":"spiky",
+
+    "5/0":false,
+    "5/1":true,
+    "5/2":1,
+    "5/3":2,
+    "5/4":3,
+    "5/5":5,
+    "5/6":8,
+    "5/7":13,
+    "5/8":20.9999
+}
