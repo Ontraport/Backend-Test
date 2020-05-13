@@ -1,0 +1,27 @@
+[
+    "fluffy",
+    {
+        "flags":[false, true, true, false, "undefined"],
+        "oranges":["navel", "valencia", "mandarin"],
+        "pi":3.14159265,
+        "answers":[
+            true,
+            false,
+            false,
+            "c",
+            "b",
+            1971,
+            null,
+            "d"
+        ],
+        "tricky":{
+            "0":"my hero",
+            "red":"roses",
+            "blue":"violets"
+        }
+    },
+    42,
+    null,
+    "spiky",
+    [false, true, 1,2,3,5,8,13,20.9999]
+]
