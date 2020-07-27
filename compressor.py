@@ -7,10 +7,11 @@ class ObjectCompressor:
     Note: Tested with Python v 3.7.3
     This is a class containing compress and decompress functions as described on https://github.com/Ontraport/Backend-Test
     """
-    def compress(self, object_to_compress, path_so_far: str = "", dictionary: dict = None) -> Union[dict, list]:
+    def compress(self, object_to_compress, path_so_far: str = "", dictionary: dict = None) -> dict:
         """
         This function compresses a multi-dimensional container of any size (tested with nested Python dictionaries and nested custom classes)
         and returns a compressed version of the original container as a Python dictionary
+        (note that a top level empty Array becomes an emptyDictionary)
         """
         if(dictionary is None):
             dictionary = {}
@@ -34,6 +35,8 @@ class ObjectCompressor:
                 else:
                     if(path_so_far):  # only add this object if it wasn't top level
                         self.save_or_recurse(path_so_far, dictionary, [], True)
+                    else:
+                        return []
         # If this is a custom object, iterate through non-private attributes and compress
         else:
             filtered_attributes = list(filter(lambda x: not x.startswith('__'), dir(object_to_compress)))
@@ -58,17 +61,17 @@ class ObjectCompressor:
             dictionary[path_so_far] = value
             return dictionary
 
-    def decompress(self, compressedObject: dict) -> Union[dict, list]:
+    def decompress(self, compressed_object: dict) -> Union[dict, list]:
         """
         This function expands a compressed container into a dictionary representation of its original form
         NOTE: If a custom object was flattened, decompress will still return a dictionary representation
         """
-        if(isinstance(compressedObject, abc.Collection)):
-            if(isinstance(compressedObject, abc.Mapping)):
+        if(isinstance(compressed_object, abc.Collection)):
+            if(isinstance(compressed_object, abc.Mapping)):
                 resultObject = {}
-                keys = compressedObject.keys()
+                keys = compressed_object.keys()
                 # For each key in the compressed object
-                for attribute in compressedObject.keys():
+                for attribute in compressed_object.keys():
                     pathList = attribute.split("/")
                     if(pathList[0].isnumeric() and isinstance(resultObject, abc.Mapping)):
                         resultObject = []
@@ -84,7 +87,7 @@ class ObjectCompressor:
                                     if(i < len(pathList) - 1 and pathList[i+1].isnumeric()):
                                         pointer.append([])
                                     elif(i == len(pathList) - 1):
-                                        pointer.append(compressedObject[attribute])
+                                        pointer.append(compressed_object[attribute])
                                     else:
                                         pointer.append({})
                                     pointer = pointer[-1]
@@ -98,5 +101,7 @@ class ObjectCompressor:
                                         pointer[token] = {}
                                 pointer = pointer[token]
                             else:
-                                pointer[token] = compressedObject[attribute]
+                                pointer[token] = compressed_object[attribute]
                 return resultObject
+            elif(isinstance(compressed_object, abc.Sized) and len(compressed_object) == 0):
+                return compressed_object

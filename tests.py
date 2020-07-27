@@ -77,42 +77,62 @@ class CompressionTests(unittest.TestCase):
         self.assertEqual({}, compressed_version)
 
     def test_single_value_compression(self):
-        compressed_version = self.object_compressor.compress({'a': 1})
+        target_object = {'a': 1}
+        compressed_version = self.object_compressor.compress(target_object)
         self.assertEqual({'a': 1}, compressed_version)
+        decompressed_version = self.object_compressor.decompress(compressed_version)
+        self.assertEqual(target_object, decompressed_version)
 
     def test_single_value_empty_object_compression(self):
-        compressed_version = self.object_compressor.compress({'a': {}})
+        target_object = {'a': {}}
+        compressed_version = self.object_compressor.compress(target_object)
         self.assertEqual({'a': {}}, compressed_version)
+        decompressed_version = self.object_compressor.decompress(compressed_version)
+        self.assertEqual(target_object, decompressed_version)
 
     def test_single_value_empty_array_compression(self):
-        compressed_version = self.object_compressor.compress({'a': []})
+        target_object = {'a': []}
+        compressed_version = self.object_compressor.compress(target_object)
         self.assertEqual({'a': []}, compressed_version)
+        decompressed_version = self.object_compressor.decompress(compressed_version)
+        self.assertEqual(target_object, decompressed_version)
 
     def test_empty_top_level_array_compression(self):
+        target_object = []
         compressed_version = self.object_compressor.compress([])
-        self.assertEqual({}, compressed_version)
+        self.assertEqual([], compressed_version)
+        decompressed_version = self.object_compressor.decompress(compressed_version)
+        self.assertEqual(target_object, decompressed_version)
 
     def test_single_array_compression(self):
         compressed_version = self.object_compressor.compress({'a': [0, 1, 2]})
         self.assertEqual({'a/0': 0, 'a/1': 1, 'a/2': 2}, compressed_version)
 
-    # These are the tests using a custom Python object instead of dictionary/List as a container
+    # These are the example case tests using a custom Python object instead of dictionary/List as a container
     def test_custom_object_compression(self):
         compressed_version = self.object_compressor.compress(self.custom_object)
         self.assertEqual(self.example_dictionary_compressed, compressed_version)
+        decompressed_version = self.object_compressor.decompress(compressed_version)
+        self.assertEqual(self.example_dictionary, decompressed_version)
 
     def test_empty_array_custom_object_compression(self):
+        dictionary_with_empty_array = {'one': {'two': 3, 'four': []}, 'eight': {'nine': {'ten': 11}}}
         empty_dictionary_compressed = {'one/two': 3, 'one/four': [], 'eight/nine/ten': 11}
         self.custom_object.one.four = []
         compressed_version = self.object_compressor.compress(self.custom_object)
         self.assertEqual(empty_dictionary_compressed, compressed_version)
+        decompressed_version = self.object_compressor.decompress(compressed_version)
+        self.assertEqual(dictionary_with_empty_array, decompressed_version)
         self.custom_object.one.four = [5, 6, 7]
 
     def test_empty_object_custom_object_compression(self):
         self.custom_object.eight.nine = MyCustomObject()
+        dictionary_with_empty_container = {'one': {'two': 3, 'four': [5, 6, 7]}, 'eight': {'nine': {}}}
         empty_object_compressed = {'one/two': 3, 'one/four/0': 5, 'one/four/1': 6, 'one/four/2': 7, 'eight/nine': {}}
         compressed_version = self.object_compressor.compress(self.custom_object)
         self.assertEqual(empty_object_compressed, compressed_version)
+        decompressed_version = self.object_compressor.decompress(compressed_version)
+        self.assertEqual(dictionary_with_empty_container, decompressed_version)
         self.custom_object.eight.nine.ten = 11
 
 
