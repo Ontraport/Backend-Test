@@ -5,6 +5,7 @@ from compressor import ObjectCompressor
 class CompressionTests(unittest.TestCase):
     """
     This is a class unit tests for compress/decompress functions
+    They can be run with '<Python3 executable> tests.py'
     """
     def setUp(self):
         self.object_compressor = ObjectCompressor()
