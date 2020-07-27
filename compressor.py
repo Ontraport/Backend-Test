@@ -1,11 +1,13 @@
 from collections import abc
+from typing import Union
 
 
 class ObjectCompressor:
     """
+    Note: Tested with Python v 3.7.3
     This is a class containing compress and decompress functions as described on https://github.com/Ontraport/Backend-Test
     """
-    def compress(self, object_to_compress, path_so_far: str = "", dictionary: dict = None) -> dict:
+    def compress(self, object_to_compress, path_so_far: str = "", dictionary: dict = None) -> Union[dict, list]:
         """
         This function compresses a multi-dimensional container of any size (tested with nested Python dictionaries and nested custom classes)
         and returns a compressed version of the original container as a Python dictionary
@@ -56,7 +58,7 @@ class ObjectCompressor:
             dictionary[path_so_far] = value
             return dictionary
 
-    def decompress(self, compressedObject: dict) -> dict:
+    def decompress(self, compressedObject: dict) -> Union[dict, list]:
         """
         This function expands a compressed container into a dictionary representation of its original form
         NOTE: If a custom object was flattened, decompress will still return a dictionary representation

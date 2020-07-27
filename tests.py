@@ -3,6 +3,9 @@ from compressor import ObjectCompressor
 
 
 class CompressionTests(unittest.TestCase):
+    """
+    This is a class unit tests for compress/decompress functions
+    """
     def setUp(self):
         self.object_compressor = ObjectCompressor()
         self.example_dictionary = {'one': {'two': 3, 'four': [5, 6, 7]}, 'eight': {'nine': {'ten': 11}}}
