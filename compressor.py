@@ -19,32 +19,32 @@ class ObjectCompressor:
                 if(len(object_to_compress) > 0):
                     for attribute in object_to_compress.keys():
                         value = object_to_compress.get(attribute)
-                        self.helper_function(path_so_far + "/" + str(attribute), dictionary, value)
+                        self.save_or_recurse(path_so_far + "/" + str(attribute), dictionary, value)
                 else:
                     if(path_so_far):  # only add this object if it wasn't top level
-                        self.helper_function(path_so_far, dictionary, {}, True)
+                        self.save_or_recurse(path_so_far, dictionary, {}, True)
             # If this is a Sized Collection (e.g. a List), iterate through elements and compress recursively
             elif(isinstance(object_to_compress, abc.Sized)):
                 if(len(object_to_compress) > 0):
                     for i in range(len(object_to_compress)):
                         value = object_to_compress[i]
-                        self.helper_function(path_so_far + "/" + str(i), dictionary, value)
+                        self.save_or_recurse(path_so_far + "/" + str(i), dictionary, value)
                 else:
                     if(path_so_far):  # only add this object if it wasn't top level
-                        self.helper_function(path_so_far, dictionary, [], True)
+                        self.save_or_recurse(path_so_far, dictionary, [], True)
         # If this is a custom object, iterate through non-private attributes and compress
         else:
             filtered_attributes = list(filter(lambda x: not x.startswith('__'), dir(object_to_compress)))
             if(len(filtered_attributes) > 0):
                 for attribute in filtered_attributes:
                     value = getattr(object_to_compress, str(attribute))
-                    self.helper_function(path_so_far + "/" + str(attribute), dictionary, value)
+                    self.save_or_recurse(path_so_far + "/" + str(attribute), dictionary, value)
             else:
                 if(path_so_far):  # only add this object if it wasn't top level
-                    self.helper_function(path_so_far, dictionary, {}, True)
+                    self.save_or_recurse(path_so_far, dictionary, {}, True)
         return dictionary
 
-    def helper_function(self, path_so_far: str, dictionary: dict, value, force_insert: bool = False) -> dict:
+    def save_or_recurse(self, path_so_far: str, dictionary: dict, value, force_insert: bool = False) -> dict:
         """
         This helper function was introduced to minimize duplicate code in the compress(...) method
         """
