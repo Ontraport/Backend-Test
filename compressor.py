@@ -11,7 +11,7 @@ class ObjectCompressor:
         """
         This function compresses a multi-dimensional container of any size (tested with nested Python dictionaries and nested custom classes)
         and returns a compressed version of the original container as a Python dictionary
-        (note that a top level empty Array becomes an emptyDictionary)
+        (note that a top level empty Array becomes an empty Array)
         """
         if(dictionary is None):
             dictionary = {}
