@@ -1,46 +1,25 @@
-# ONTRAPORT Backend Skills Test
+## Object Converter
 
-Hi, Thanks for checking us out
+This tool converts the multidimensional container to single list object and vice versa. The code is written in
+JavaScript. Mocha and Chai is used for unit testing.
 
-If you're interested in applying for the **Backend Engineer** team a great first step is to complete a brief test to allow us to assess your skills. You will find our Backend Engineer test below. Any language is fine, please note there are **two** questions:
+**Steps to run the application:**
 
-1) Write a function that accepts a multi-dimensional container of any size and converts it into a one dimensional associative array whose keys are strings representing their value's path in the original container.
+1. Clone/Download the repository.
 
-E.G.
+2. Download the dependencies.
+   ```
+      npm install
+   ``` 
 
-```
-{
-    'one':
-    {
-        'two': 3,
-        'four': [ 5,6,7]
-    },
-    'eight':
-    {
-        'nine':
-        {
-            'ten':11
-        }
-    }
-}
-```
+3. Run the main.js file using node.
+   ```
+      node main.js
+   ```
 
-turns into:
+**Steps to run unit test for this application:**
 
-```
-{
-    'one/two':3,
-    'one/four/0':5,
-    'one/four/1':6,
-    'one/four/2':7,
-    'eight/nine/ten':11
-}
-```
-
-2) Now write a separate function to do the reverse.
-
-We want you to fork and then create a pull-reqest against this repository and we'll review it.
-
-Thanks and good luck!
-
-Ontraport Careers Team
+1. Run the unit test using below command.
+   ```
+      npm test
+   ```
