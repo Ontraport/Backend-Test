@@ -39,7 +39,7 @@ turns into:
 
 2) Now write a separate function to do the reverse.
 
-We want you to fork and then create a pull-reqest against this repository and we'll review it.
+We want you to fork and then create a pull-request against this repository and we'll review it.
 
 Thanks and good luck!
 
