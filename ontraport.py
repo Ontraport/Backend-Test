@@ -2,7 +2,7 @@
 ontraport.py
 By: Irvin Leshchinsky | 2/4/2021
 Compatibility: Python 3.8.5 
-(In order to ensure correct function please use v 3.8.5 or higher)
+(In order to ensure correct functionality please use v 3.8.5 or higher)
 
 Collection of functions set to solve Problems 1 and 2 as defined
 in https://github.com/Ontraport/Backend-Test.
@@ -17,13 +17,14 @@ from collections import deque
 
 def deep_merge(dict1: dict, dict2: dict) -> dict:
     """
-    Function takes in two dictionaries and merges them into into first dict,
+    Function takes in two dictionaries and merges them into first dict,
     combining sub-dictionaries and sub-lists into the same key instead of overwriting them
     like update() does. In cases where the value is not a dict or list, function acts like update()
 
     Args: 
         dict1 (dict): A primary dictionary you want to merge another dictionary in to
         dict2 (dict): A secondary dictionary that you want to merge into the previous
+    
     Returns:
         A merged dictionary that contains the merged values from dict1 and dict2
     
@@ -43,11 +44,12 @@ def deep_merge(dict1: dict, dict2: dict) -> dict:
 def multi_to_single(multi_container: dict) -> dict:
     """
     Function takes in a dictionary of any dimension or size and compresses it,
-    creating a one-dimensional dictionary whose keys are string representing a
+    creating a one-dimensional dictionary whose keys are strings representing a
     path that indicates the original structure of the dictionary
 
     Args:
         multi_container (dict): A dictionary of any dimension or size with string keys
+    
     Returns:
         A single-dimensional dictionary
     
@@ -62,6 +64,7 @@ def multi_to_single_rec(inner_container: dict, built_key: str) -> dict:
     Args:
         inner_container (dict): A dictionary of any dimension or size with string keys
         built_key (str): A string consisting of the path traversed down a dictionary branch
+    
     Returns:
         A single-dimensional dictionary
 
@@ -88,6 +91,7 @@ def single_to_multi(single_container: dict) -> dict:
 
     Args:
         single_container (dict): A single-dimensional dictionary
+    
     Returns:
         An multi-dimensional dictionary that is the expanded form of the initial dictionary
     
