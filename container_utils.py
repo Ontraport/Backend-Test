@@ -139,7 +139,6 @@ def widen(container):
 if __name__ == "__main__":
     # Test Cases
     widened_containers = [
-        {},
         {
             "one": 1
         },
@@ -172,7 +171,6 @@ if __name__ == "__main__":
         ],
     ]
     flattened_containers = [
-        {},
         {
             "one": 1
         },
@@ -195,3 +193,8 @@ if __name__ == "__main__":
     for index in range(len(widened_containers)):
         assert flatten(widened_containers[index]) == flattened_containers[index]
         assert widen(flattened_containers[index]) == widened_containers[index]
+
+    assert flatten([]) == {}
+    assert flatten({}) == {}
+    assert widen([]) == []
+    assert widen({}) == {}
