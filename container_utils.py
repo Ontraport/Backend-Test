@@ -100,14 +100,17 @@ def widen(container):
         if isinstance(any_random_key, int):
             list_size = int(max(container)) + 1
             list_container = [None] * (list_size)
+
             for key, value in container.items():
                 list_index = int(key)
                 list_container[list_index] = recursive_replacement(value)
+
             return list_container
 
         else:
             for key, value in container.items():
                 container[key] = recursive_replacement(value)
+
             return container
 
     widened_container = {}
@@ -161,7 +164,6 @@ if __name__ == "__main__":
                 "four": [4, 5, {"five": [6]}]
             }
         ],
-
     ]
     flattened_containers = [
         {
@@ -181,7 +183,6 @@ if __name__ == "__main__":
             '2/four/1': 5,
             '2/four/2/five/0': 6
         },
-
     ]
 
     for index in range(len(widened_containers)):
