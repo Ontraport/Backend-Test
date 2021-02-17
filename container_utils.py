@@ -35,6 +35,8 @@ def flatten(container):
         "2/four/2/five/0": 6
     }
     """
+    if len(container) == 0:
+        return {}
 
     flattened_container = {}
     def recursive_flatten(container, current_key = None):
@@ -113,6 +115,9 @@ def widen(container):
 
             return container
 
+    if len(container) == 0:
+        return container
+
     widened_container = {}
     # Store lists as dictionaries with integer keys, replace recursively later
     for key, value in container.items():
@@ -134,6 +139,7 @@ def widen(container):
 if __name__ == "__main__":
     # Test Cases
     widened_containers = [
+        {},
         {
             "one": 1
         },
@@ -166,6 +172,7 @@ if __name__ == "__main__":
         ],
     ]
     flattened_containers = [
+        {},
         {
             "one": 1
         },
