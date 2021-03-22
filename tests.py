@@ -14,6 +14,7 @@ def run_tests(testcases, expected_results):
 				print(f"Test{i+1} passed")
 			else:
 				print(f"Test{i+1} failed")
+				print(actual)
 
 
 """
