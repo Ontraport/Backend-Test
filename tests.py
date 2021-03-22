@@ -19,7 +19,7 @@ def run_tests(testcases, expected_results):
 
 """
 Test cases for Problem 1 (Flattening a multidimensional container into an associative array):
-	- solution1() is the top-level for flatten_mdim() function in solution.py which solves this  
+	- solution1() is the top-level for flatten_container() function in solution.py which solves this  
 """
 
 """
@@ -94,22 +94,28 @@ input is not a dict
 """
 test6 = [1,2,3]
 
+"""
+array contains a nested array
+"""
+test7 = {"key1":5,"key2":[[8,9],2,3]}  
+
 expected1 = { "one/two":3, "one/four/0":5, "one/four/1":6, "one/four/2": 7, "eight/nine/ten":11 }
 expected2 = { "one/two/nested1_deep/nested2_deep1":3, "one/two/nested1_deep/nested2_deep2":9, "one/four/0":5, "one/four/1":6, "one/four/2": 7, "eight/nine/ten":11 }
 expected3 = { "one/two": 3, "one/four/0/key/0":3, "one/four/0/key/1": 4, "one/four/0/key/2": 7, "one/four/1": 6, "one/four/2": 7, "eight/nine/ten":11 }
 expected4 = {}
 expected5 = {"key1": 5, "key2/0/key3/0":8, "key2/0/key3/1":9, "key2/1":2, "key2/2": 3}
 expected6 = { '0':1, '1':2, '2':3}
+expected7 = {"key1":5, "key2/0/0":8, "key2/0/1":9, "key2/1":2, "key2/2":3}
 
 """
 Test cases for Problem 2 (Reversing the associative array back into the original)
-	- solution2() is the top-level for 
+	- solution2() is the top-level for reverse() 
 """
 
-tests = [[test1, test2, test3, test4, test5, test6], []]
+tests = [[test1, test2, test3, test4, test5, test6, test7], []]
 
 
-expected = [[expected1, expected2, expected3, expected4, expected5, expected6], []]
+expected = [[expected1, expected2, expected3, expected4, expected5, expected6, expected7], []]
 
 run_tests(tests, expected)
 
