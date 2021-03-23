@@ -1,6 +1,6 @@
 import solution
 
-def run_tests(testcases, expected_results):
+def run_unit_tests(testcases, expected_results):
 	for n in range(len(testcases)):
 		print(f"Running tests for problem{n+1}...")
 		tests, expected = testcases[n], expected_results[n]
@@ -16,6 +16,13 @@ def run_tests(testcases, expected_results):
 				print(f"Test{i+1} failed")
 				print(actual)
 
+def run_both(testcases):
+	print(f"Running end-to-end tests...")
+	for i in range(len(testcases)):
+		test = testcases[i]
+		if test == solution.solution2(solution.solution1(test)):
+			print(f"End to End Test{i+1} passed")
+	
 
 """
 Test cases for Problem 1 (Flattening a multidimensional container into an associative array):
@@ -109,13 +116,15 @@ expected7 = {"key1":5, "key2/0/0":8, "key2/0/1":9, "key2/1":2, "key2/2":3}
 
 """
 Test cases for Problem 2 (Reversing the associative array back into the original)
-	- solution2() is the top-level for reverse() 
+	- solution2() is the top-level which solves problem2 
+	
+Test cases for Problem 2 are output of function solution1 applied to each test case
+Expected for each of Problem 2's outputs are the testcases themselves for Problem 1 
 """
 
-tests = [[test1, test2, test3, test4, test5, test6, test7], []]
+tests = [[test1, test2, test3, test4, test5, test6, test7], [expected1, expected2, expected3, expected4, expected5, expected6, expected7]]
 
+expected = [[expected1, expected2, expected3, expected4, expected5, expected6, expected7], [test1, test2, test3, test4, test5, test6, test7]]
 
-expected = [[expected1, expected2, expected3, expected4, expected5, expected6, expected7], []]
-
-run_tests(tests, expected)
-
+run_unit_tests(tests, expected)
+run_both(tests[0])

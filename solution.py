@@ -22,71 +22,52 @@ def solution2(input) -> dict:
 	""" Takes a subpath and converts it into an int type if possible, otherwise returns as is (str) """
 	def make_int_if_array(subpath): 
 		try:
-			int_subpath = int(subpath)
-			return int_subpath
+			return int(subpath)
 		except:
 			return subpath
+			
+	""" 4 cases and different operations required based on current underlying object and next underlying object  """		
+	def initialize_next_object(next_subpath, curr_subpath, local_container):
+		if type(curr_subpath) == int and type(next_subpath) == int:  #nested array 
+			local_container.append([])
+		if type(curr_subpath) == int and type(next_subpath) == str:  #dict inside array 
+			local_container.append({})
+		if type(curr_subpath) == str and type(next_subpath) == int: #array inside dict 
+			local_container[curr_subpath] = []
+		if type(curr_subpath) == str and type(next_subpath) == str: #nested dict 
+			local_container[curr_subpath] = {}
 	
 	def build_container(container, seen_path, subpaths, i, value):
 		local_container = container
-		for key in seen_path:
-	#		local_container = local_container[key]
-			try:
-				local_container = local_container[int(key)]
-			except ValueError:
-				local_container = local_container[key]		
-		try:
-			subpath = int(subpaths[i])
-			try:
-				present = (local_container[subpath] in local_container)
-			except:
-				present = False
-		except ValueError:
-			subpath = subpaths[i]
-			present = (subpath in local_container)
-			
-	#	if subpath not in local_container:
-		if not present:
-			try:
-				subpath_index = int(subpath)
-				if i == (len(subpaths) - 1):
-					local_container.append(value)	
-				else:	
-					try:
-						next_path = int(subpaths[i+1])
-						if local_container == []:
-							local_container.append([])
-						else:
-							local_container[subpath] = []
-					except ValueError:
-						local_container.append({})
-				
-			except ValueError:  #if element is not an index, it is a key so underlying element is a dict 
-				if i == (len(subpaths) - 1):
-					local_container[subpath] =  value
-				else:
-					try:
-						next_path = int(subpaths[i+1])
-						if local_container == []:
-							local_container.append([])
-#							local_container[subpath] = []
-						else:
-							local_container[subpath] = []
-					except ValueError:
-						local_container[subpath] = {}
-	
+		for key in seen_path: 
+			local_container = local_container[key]  #run through all prior keys to index container down to most recent state
+		
+		subpath = subpaths[i]
+		if type(subpath) == int:
+			in_container = (subpath < len(local_container))		#check if index in array  	
+		else:
+			in_container = (subpath in local_container)   #check if key in dict 
+
+		if not in_container:  #only build subpath in the container if it doesn't exist already
+			if i == len(subpaths) - 1 and type(subpath) == int:  
+				local_container.append(value)
+			elif i == len(subpaths) - 1 and type(subpath) == str:  
+				local_container[subpath] = value   
+			else:
+				initialize_next_object(subpaths[i+1], subpath, local_container)
+						 
 	def reverse(paths, container={}):
 		try:
-			first_elem = paths[0]
-			container = []
+			array = list(paths.keys())[0]   
+			first_val = int(array.split("/")[0])  #checking first val, if it is array index then input is array 
+			container = []  #set container to array when input is mdim array
 		except:
 			container = {}
-		
+
 		for path in paths:
-		#	subpaths = [make_int_if_array(subpath) for subpath in path.split("/")] 
-			subpaths = [subpath for subpath in path.split("/")]
+			subpaths = [make_int_if_array(subpath) for subpath in path.split("/")]  #preprocess: cast array indices to int 
 			for i in range(len(subpaths)):
-				build_container(container, [subpaths[j] for j in range(i)], subpaths, i, paths[path])
+				build_container(container, [subpaths[j] for j in range(i)], subpaths, i, paths[path])			
 		return container
-		
+			
 	return reverse(input)
