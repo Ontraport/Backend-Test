@@ -44,3 +44,21 @@ We want you to fork and then create a pull-reqest against this repository and we
 Thanks and good luck!
 
 Ontraport Careers Team
+
+# Proposed solution using Javascript
+run test by:
+```
+$ node main.js
+# Original
+{ one: { two: 3, four: [ 5, 6, 7 ] }, eight: { nine: { ten: 11 } } }
+# Flattend
+{
+  'one/two': 3,
+  'one/four/0': 5,
+  'one/four/1': 6,
+  'one/four/2': 7,
+  'eight/nine/ten': 11
+}
+# Reconstucted
+{ one: { two: 3, four: [ 5, 6, 7 ] }, eight: { nine: { ten: 11 } } }
+```
