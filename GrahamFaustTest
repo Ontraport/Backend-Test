@@ -1,0 +1,52 @@
+#Written in Python3
+#Question 1
+sample = {
+    'one':
+    {
+        'two': 3,
+        'four': [ 5,6,7]
+    },
+    'eight':
+    {
+        'nine':
+        {
+            'ten':11
+        }
+    }
+}
+def question1(dict1):
+    final = 0
+    dict1_copy = dict1.copy()
+    while (final==0):
+        dict1 = dict1_copy.copy()
+        final=1
+        for i in dict1:
+            if type(dict1[i])==dict:
+                final=0
+                for j in dict1[i]:
+                    dict1_copy[i+"/"+j]=dict1[i][j]
+                del dict1_copy[i]
+                break
+            elif type(dict1[i])==list:
+                final=0
+                index = 0
+                for j in dict1[i]:
+                    dict1_copy[i+"/"+str(index)]=j
+                    index+=1
+                del dict1_copy[i]
+                break
+    return dict1
+
+print(question1(sample))
+
+
+#Question 2
+def question2(dict2):
+    answer = question1(dict2)
+    answer_copy = answer.copy()
+    for i in answer_copy:
+        answer[answer[i]]=i
+        del answer[i]
+    return answer
+
+print(question2(sample))
