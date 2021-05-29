@@ -28,19 +28,36 @@ def compress(data):
 
 
 def expand_helper(nodes, result, value, prev_node):
-    for node in nodes:
+    node = nodes[0]
 
-        if node.isnumeric():
-            if int(node) == 0:
-                result[prev_node] = [value]
-            else:
-                result[prev_node].append(value)
+    # integer nodes (lists)
+    if node.isnumeric():
+        if int(node) == 0:
+            result[prev_node] = [value]
+        else:
+            result[prev_node].append(value)
 
-        if node == nodes[-1]:
-            result[node] = value
+    # last non-numeric node
+    elif node == nodes[-1]:
+        result[node] = value
 
-        elif node not in result.keys():
+    # new dict
+    elif node not in result.keys():
+        # if the next node is a number, create a list
+        if nodes[nodes.index(node) + 1].isnumeric():
+            result[node] = [value]
+        else:
             result[node] = expand_helper(nodes[1:], {}, value, node)
+
+    # node already exists in result
+    else:
+        # if node is equal to list, append to list
+        if type(result[node]) == list:
+            result[node].append(value)
+        else:
+            expand_helper(nodes[1:], result[node], value, node)
+
+    return result
 
 
 def expand(data):
@@ -53,21 +70,12 @@ def expand(data):
     return result
 
 
-# for every line:
-#     for every node in line:
-#         if key/node doesnt exist:
-#             create key with value None
-#             continue
-#         if key/node does exist:
-#             continue
-
-
 def main():
     filename = sys.argv[1]
     file = open(filename, 'r')
     data = file.read()
     # print(compress(data))
-    print(expand(data))
+    # print(expand(data))
 
 
 if __name__ == '__main__':
