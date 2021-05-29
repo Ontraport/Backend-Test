@@ -1,13 +1,20 @@
+# Elliot Brainerd
+# Ontraport Backend Test 5/29
+
+# Usage: python .\ontraport_test.py <filename>
+
 import sys
 import ast
 
 
 def compress_helper(data, result, cur_path):
     for key in data:
+
         if type(data[key]) is dict:
             cur_path += key + "/"
             compress_helper(data[key], result, cur_path)
             cur_path = ""
+
         elif type(data[key]) is list:
             cur_path += key + "/"
             cur_path_copy = cur_path
@@ -15,12 +22,16 @@ def compress_helper(data, result, cur_path):
                 cur_path_copy += str(i)
                 result[cur_path_copy] = data[key][i]
                 cur_path_copy = cur_path
+
         else:
             result[cur_path + key] = data[key]
 
     return result
 
 
+# Accepts a multi-dimensional container of any size and converts it into a
+# one dimensional associative array whose keys are strings representing
+# their value's path in the original container
 def compress(data):
     data = ast.literal_eval(data)
     if type(data) is dict:
@@ -30,28 +41,25 @@ def compress(data):
 def expand_helper(nodes, result, value, prev_node):
     node = nodes[0]
 
-    # integer nodes (lists)
+    # integer nodes (for lists)
     if node.isnumeric():
-        if int(node) == 0:
-            result[prev_node] = [value]
-        else:
-            result[prev_node].append(value)
+        if type(result[prev_node] != list):
+            result[prev_node] = []
+        result[prev_node].insert(int(node), value)
 
-    # last non-numeric node
+    # last node, non-numeric
     elif node == nodes[-1]:
         result[node] = value
 
-    # new dict
+    # new node, new dict
     elif node not in result.keys():
-        # if the next node is a number, create a list
         if nodes[nodes.index(node) + 1].isnumeric():
             result[node] = [value]
         else:
             result[node] = expand_helper(nodes[1:], {}, value, node)
 
-    # node already exists in result
+    # node already seen
     else:
-        # if node is equal to list, append to list
         if type(result[node]) == list:
             result[node].append(value)
         else:
@@ -60,6 +68,8 @@ def expand_helper(nodes, result, value, prev_node):
     return result
 
 
+# Accepts one dimensional associative array whose keys are strings representing
+# their value's path and creates a multi-dimensional container
 def expand(data):
     data = ast.literal_eval(data)
     if type(data) is dict:
@@ -74,8 +84,8 @@ def main():
     filename = sys.argv[1]
     file = open(filename, 'r')
     data = file.read()
-    # print(compress(data))
-    # print(expand(data))
+    # compressed = compress(data)
+    # expanded = expand(data)
 
 
 if __name__ == '__main__':
