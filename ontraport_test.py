@@ -27,14 +27,20 @@ def compress(data):
         return compress_helper(data, {}, "")
 
 
-def expand_helper(result, cur_path_list):
-    top = cur_path_list.pop(0)
-    if top not in result.keys() and not top.isnumeric():
-        result[top] = expand_helper({}, cur_path_list)
-    elif top in result.keys():
-        expand_helper(result[top], cur_path_list[1:])
-    elif top.isnumeric():
-        pass
+def expand_helper(nodes, result, value, prev_node):
+    for node in nodes:
+
+        if node.isnumeric():
+            if int(node) == 0:
+                result[prev_node] = [value]
+            else:
+                result[prev_node].append(value)
+
+        if node == nodes[-1]:
+            result[node] = value
+
+        elif node not in result.keys():
+            result[node] = expand_helper(nodes[1:], {}, value, node)
 
 
 def expand(data):
@@ -42,18 +48,18 @@ def expand(data):
     if type(data) is dict:
         result = {}
         for key in data:
-            spl = key.split("/")
-            expand_helper(result, spl)
-        return result
+            nodes = key.split('/')
+            expand_helper(nodes, result, data[key], None)
+    return result
 
 
-for every line:
-    for every node in line:
-        if key/node doesnt exist:
-            create key with value None
-            continue
-        if key/node does exist:
-            continue
+# for every line:
+#     for every node in line:
+#         if key/node doesnt exist:
+#             create key with value None
+#             continue
+#         if key/node does exist:
+#             continue
 
 
 def main():
@@ -61,7 +67,7 @@ def main():
     file = open(filename, 'r')
     data = file.read()
     # print(compress(data))
-    expand(data)
+    print(expand(data))
 
 
 if __name__ == '__main__':
