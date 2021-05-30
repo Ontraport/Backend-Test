@@ -1,7 +1,9 @@
 # Elliot Brainerd
 # Ontraport Backend Test 5/29
 
-# Usage: python .\ontraport_test.py <filename>
+# usage: 
+# update main method according to input file format
+# run python .\ontraport_test.py <filename>
 
 import sys
 import ast
@@ -18,57 +20,62 @@ def compress_helper(data, result, cur_path):
         elif type(data[key]) is list:
             cur_path += key + "/"
             cur_path_copy = cur_path
+
             for i in range(len(data[key])):
                 cur_path_copy += str(i)
                 result[cur_path_copy] = data[key][i]
                 cur_path_copy = cur_path
 
+        #integers
         else:
             result[cur_path + key] = data[key]
 
     return result
 
 
-# Accepts a multi-dimensional container of any size and converts it into a
+# accepts a multi-dimensional container of any size and converts it into a
 # one dimensional associative array whose keys are strings representing
 # their value's path in the original container
 def compress(data):
     data = ast.literal_eval(data)
     if type(data) is dict:
         return compress_helper(data, {}, "")
+    else:
+        print("Error with input file.")
+        exit
 
 
 def expand_helper(nodes, result, value, prev_node):
-    node = nodes[0]
+    cur_node = nodes[0] # nodes represent the keys in a given path
 
-    # integer nodes (for lists)
-    if node.isnumeric():
+    # integer nodes
+    if cur_node.isnumeric():
         if type(result[prev_node] != list):
             result[prev_node] = []
-        result[prev_node].insert(int(node), value)
+        result[prev_node].insert(int(cur_node), value)
 
     # last node, non-numeric
-    elif node == nodes[-1]:
-        result[node] = value
+    elif cur_node == nodes[-1]:
+        result[cur_node] = value
 
-    # new node, new dict
-    elif node not in result.keys():
-        if nodes[nodes.index(node) + 1].isnumeric():
-            result[node] = [value]
+    # new node
+    elif cur_node not in result.keys():
+        if nodes[nodes.index(cur_node) + 1].isnumeric():
+            result[cur_node] = [value]
         else:
-            result[node] = expand_helper(nodes[1:], {}, value, node)
+            result[cur_node] = expand_helper(nodes[1:], {}, value, cur_node)
 
     # node already seen
     else:
-        if type(result[node]) == list:
-            result[node].append(value)
+        if type(result[cur_node]) == list:
+            result[cur_node].insert(int(nodes[nodes.index(cur_node) + 1]), value)
         else:
-            expand_helper(nodes[1:], result[node], value, node)
+            expand_helper(nodes[1:], result[cur_node], value, cur_node)
 
     return result
 
 
-# Accepts one dimensional associative array whose keys are strings representing
+# accepts one dimensional associative array whose keys are strings representing
 # their value's path and creates a multi-dimensional container
 def expand(data):
     data = ast.literal_eval(data)
@@ -77,15 +84,22 @@ def expand(data):
         for key in data:
             nodes = key.split('/')
             expand_helper(nodes, result, data[key], None)
-    return result
+        return result
+    else:
+        print("Error with input file.")
+        exit
 
 
 def main():
     filename = sys.argv[1]
     file = open(filename, 'r')
     data = file.read()
-    # compressed = compress(data)
-    # expanded = expand(data)
+
+    # input1.txt
+    print(compress(data))
+
+    # input2.txt
+    # print(expand(data))
 
 
 if __name__ == '__main__':
