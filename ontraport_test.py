@@ -1,7 +1,7 @@
 # Elliot Brainerd
 # Ontraport Backend Test 5/29
 
-# usage: 
+# usage:
 # update main method according to input file format
 # run python .\ontraport_test.py <filename>
 
@@ -26,7 +26,7 @@ def compress_helper(data, result, cur_path):
                 result[cur_path_copy] = data[key][i]
                 cur_path_copy = cur_path
 
-        #integers
+        # integers
         else:
             result[cur_path + key] = data[key]
 
@@ -46,12 +46,10 @@ def compress(data):
 
 
 def expand_helper(nodes, result, value, prev_node):
-    cur_node = nodes[0] # nodes represent the keys in a given path
+    cur_node = nodes[0]  # nodes represent the keys in a given path
 
     # integer nodes
     if cur_node.isnumeric():
-        if type(result[prev_node] != list):
-            result[prev_node] = []
         result[prev_node].insert(int(cur_node), value)
 
     # last node, non-numeric
@@ -68,7 +66,8 @@ def expand_helper(nodes, result, value, prev_node):
     # node already seen
     else:
         if type(result[cur_node]) == list:
-            result[cur_node].insert(int(nodes[nodes.index(cur_node) + 1]), value)
+            result[cur_node].insert(
+                int(nodes[nodes.index(cur_node) + 1]), value)
         else:
             expand_helper(nodes[1:], result[cur_node], value, cur_node)
 
@@ -96,10 +95,10 @@ def main():
     data = file.read()
 
     # input1.txt
-    print(compress(data))
+    # print(compress(data))
 
     # input2.txt
-    # print(expand(data))
+    print(expand(data))
 
 
 if __name__ == '__main__':
