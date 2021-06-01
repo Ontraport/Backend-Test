@@ -5,6 +5,12 @@
 # update main method according to input file format
 # run python .\ontraport_test.py <filename>
 
+# eg. 
+# uncomment line in main "print(expand(data))"
+# python ./ontraport_test.py input2.txt
+
+# solution assumes that list values are final/do not contain nested data structures
+
 import sys
 import ast
 
