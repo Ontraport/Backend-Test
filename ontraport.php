@@ -1,8 +1,5 @@
 <?php
-/*
-The below code is dynamic. It gives result as expected if we change the input request.
-I have added 2 json files containing json inputs. data.json is used for  MultiToOneDimentionalArray Function and reverse_data.json is used for OneToMultidimentionalArray 
-*/ 
+
 class Ontraport {
 
     public $result = [];
